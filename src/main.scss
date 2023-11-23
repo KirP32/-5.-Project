@@ -34,25 +34,42 @@ body {
 
 @mixin name() {
     display: flex;
+    flex-direction: var(--_f-direction);
     & span {
         margin: 18px;
+        margin-bottom: 0;
     }
 }
 
+@mixin ts($color: none, $area: none) {
+    text-align: center;
+    background-color: $color;
+    grid-area: $area;
+}
+
+$breakpoint-tablet: 840px;
+$breakpoint-phone: 600px;
 
 .container {
+    --_bdradius: 24px;
     --_column: 360px 1fr;
+    --_row: 1fr 1fr 1fr;
     --_direction: column;
+    --size: 22px;
+    --weight: 400px;
+    --mgtp: 17px;
+    --spacing: 0px;
+    
     box-sizing: border-box;
     height: 100%;
     display: grid;
     grid-template-columns: var(--_column);
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: var(--_row);
     grid-template-areas: "nav header" "nav main" "nav footer";
     &__navigation {
         grid-area: nav;
         display: grid;
-        grid-template-rows: 350px 1fr;
+        
         flex-direction: var(--_direction);
         background-color: var(--md-sys-color-on-surface);
         color: var(--md-sys-color-on-surface-variant);
@@ -60,16 +77,60 @@ body {
             & * {
                 @include name();
             }
+            & h5 {
+                font-size: var(--size);
+                font-weight: var(--weight);
+                margin-top: var(--mgtp);
+                letter-spacing: var(--spacing);
+            }
+            display: var(--display, flex);
+            flex-direction: var(--_phone-dir,column);
+            gap: 15px;
+            grid-template-rows: var(--phone_r, none);
+            grid-template-columns: var(--phone_c, none);
         }
     }
     &__footer {
-        color: #141218;
+        @include ts(lightcoral, footer);
     }
     &__header {
-        color: #141218;
+        @include ts(lightgreen, header);
     }
     &__main {
-        color: #141218;
+        @include ts(lightblue, main);
+    }
+    @media (max-width: #{$breakpoint-tablet}) {
+        --_column: 80px 1fr;
+        --_bdradius: 18px;
+        --_f-direction: column;
+        --mgtop: 8px;
+        --size: 16px;
+        --weight: 500;
+        --spacing: 0.15px;
+        --mgtp: 4px;
+        .container__navigation__base{
+            & h5 {
+                margin-top: 4px;
+                text-align: center;
+            }
+            & span {
+                text-align: center;
+            }
+        }
+    }
+    @media (max-width: #{$breakpoint-phone}) {
+        --_column: 1fr;
+        --_row: 200px 1fr 80px 1fr;
+        --mgtp: 4px;
+        --mgtop: 8px;
+        --size: 14px;
+        --weight: 400;
+        --spacing: 0.10px;
+        --_phone-dir: row;
+        --phone_r: 1fr;
+        --phone_c: 1fr 1fr 1fr 1fr;
+        grid-template-areas: "header" "main" "nav" "footer";
+        --display: grid;
     }
 }
 
@@ -79,12 +140,14 @@ body {
     max-height: 56px;
     &::before {
         content: " ";
+        margin-bottom: -10px;
+        margin-top: var(--mgtop);
         position: absolute;
         z-index: -1;
         background: currentColor;
         inset: 0;
         opacity: var(--state-layer-opacity, 0);
-        border-radius: 24px;
+        border-radius: var(--_bdradius);
     }
     &:hover {
         --state-layer-opacity: 0.25;
