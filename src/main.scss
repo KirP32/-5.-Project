@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+:root {
+    /* light */
+    --md-sys-color-on-surface-light: #fef7ff; // container
+    --md-sys-color-on-surface-variant-light: #1d192b; // text
+    --md-sys-color-surface-container-highest-light: #1d192b; //hovered
+
+    /* dark */
+    --md-sys-color-on-surface-dark: #141218;
+    --md-sys-color-on-surface-variant-dark: #e8def8;
+    --md-sys-color-surface-container-highest-dark: #4a4458;
+
+    @media (prefers-color-scheme: light) {
+        --md-sys-color-on-surface: var(--md-sys-color-on-surface-light);
+        --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-light);
+        --md-sys-color-surface-container-highest: var(--md-sys-color-surface-container-highest-light);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        --md-sys-color-on-surface: var(--md-sys-color-on-surface-dark);
+        --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-dark);
+        --md-sys-color-surface-container-highest: var(--md-sys-color-surface-container-highest-dark);
+    }
+}
+
+@mixin name() {
+    display: flex;
+    & span {
+        margin: 18px;
+    }
+}
+
+
+.container {
+    --_column: 360px 1fr;
+    --_direction: column;
+    box-sizing: border-box;
+    height: 100%;
+    display: grid;
+    grid-template-columns: var(--_column);
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: "nav header" "nav main" "nav footer";
+    &__navigation {
+        grid-area: nav;
+        display: grid;
+        grid-template-rows: 350px 1fr;
+        flex-direction: var(--_direction);
+        background-color: var(--md-sys-color-on-surface);
+        color: var(--md-sys-color-on-surface-variant);
+        &__base {
+            & * {
+                @include name();
+            }
+        }
+    }
+    &__footer {
+        color: #141218;
+    }
+    &__header {
+        color: #141218;
+    }
+    &__main {
+        color: #141218;
+    }
+}
+
+.item {
+    position: relative;
+    isolation: isolate;
+    max-height: 56px;
+    &::before {
+        content: " ";
+        position: absolute;
+        z-index: -1;
+        background: currentColor;
+        inset: 0;
+        opacity: var(--state-layer-opacity, 0);
+        border-radius: 24px;
+    }
+    &:hover {
+        --state-layer-opacity: 0.25;
+    }
+}
